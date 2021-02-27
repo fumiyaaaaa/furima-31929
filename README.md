@@ -2,57 +2,67 @@
 
 ## usersテーブル
 
-| Column                 | Type    | Options    |
-| ---------------------- | ------- | ---------- |
-| nickname               | string  | null:false |
-| email                  | string  | null:false |
-| password               | string  | null:false |
-| chinese_character_name | string  | null:false |
-| kana_name              | string  | null:false |
-| birthday               | integer | null:false |
+| Column                       | Type    | Options                 |
+| ---------------------------- | ------- | ----------------------- |
+| nickname                     | string  | null:false              |
+| email                        | string  | null:false, unique:true |
+| encrypted_password           | string  | null:false              |
+| chinese_character_last_name  | string  | null:false              |
+| chinese_character_first_name | string  | null:false              |
+| kana_last_name               | string  | null:false              |
+| kana_first_name              | string  | null:false              |
+| birthday                     | date    | null:false              |
 
 ### Association
 
 - has_many : items
-- has_many : buys
+- has_many : buyer_information
+- has_many : order_history
 
 
 ## itemsテーブル
 
-| Column        | Type       | Options                      |
-| ------------- | ---------- | ---------------------------- |
-| item_name     | string     | null:false                   |
-| text          | text       | null:false                   |
-| category      | string     | null:false                   |
-| status        | string     | null:false                   |
-| delivery_cost | string     | null:false                   |
-| shipping_area | string     | null:false                   |
-| shipping_day  | string     | null:false                   |
-| price         | integer    | null:false                   |
-| user          | references | null:false, foreign_key:true |
+| Column           | Type       | Options                      |
+| ---------------- | ---------- | ---------------------------- |
+| item_name        | string     | null:false                   |
+| text             | text       | null:false                   |
+| category_id      | integer     | null:false                   |
+| status_id        | integer     | null:false                   |
+| delivery_cost_id | integer     | null:false                   |
+| address_id       | integer     | null:false                   |
+| shipping_day_id  | integer     | null:false                   |
+| price            | integer    | null:false                   |
+| user             | references | null:false, foreign_key:true |
 
 ### Association
 
 - belongs_to : user
-- has_one : buy
+- has_one : buyer_information
+- has_on : order_history
 
 
-## buysテーブル
+## buyer_informationテーブル
 
-| Column          | Type       |                              |
-| --------------- | ---------- | ---------------------------- |
-| card_number     | integer    | null:false                   |
-| expiration_date | integer    | null:false                   |
-| security_code   | integer    | null:false                   |
-| postal_code     | integer    | null:false                   |
-| prefectures     | string     | null:false                   |
-| municipality    | string     | null:false                   |
-| address         | string     | null:false                   |
-| building_name   | string     |                              |
-| tel             | integer    | null:false                   |
-| user            | references | null:false, foreign_key:true |
-| item            | references | null:false, foreign_key:true |
+| Column        | Type       |                              |
+| ------------- | ---------- | ---------------------------- |
+| postal_code   | string     | null:false                   |
+| address_id    | integer    | null:false                   |
+| building_name | string     |                              |
+| tel           | string     | null:false                   |
 
 ### Association
 - belongs_to : user
 - belongs_to : item
+- has_one : order_history
+
+## order_historyテーブル
+
+| Column        | Type       | Options                      |
+| ------------- | ---------- | ---------------------------- |
+| user          | references | null:false, foreign_key:true |
+| item          | references | null:false, foreign_key:true |
+
+### Association
+- belongs_to : user
+- belongs_to : item
+- belongs_to : buyer_information
