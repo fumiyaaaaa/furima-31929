@@ -49,6 +49,7 @@
 | block_number  | string     | null:false                   |
 | building_name | string     |                              |
 | tel           | string     | null:false                   |
+| order_history | references | null:false, foreign_key:true |
 
 ### Association
 
