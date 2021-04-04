@@ -5,6 +5,7 @@ class OrderHistoriesController < ApplicationController
   end
 
   def create
+    @item = Item.find(params[:item_id])
     @order = Order.new(order_params)
     if @order.valid?
       @order.save
