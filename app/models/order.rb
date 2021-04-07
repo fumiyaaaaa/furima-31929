@@ -1,8 +1,9 @@
 class Order
   include ActiveModel::Model
-  attr_accessor :postal_code, :address_id, :municipality, :block_number, :building_name, :tel, :user_id, :item_id, :order_history_id
+  attr_accessor :postal_code, :address_id, :municipality, :block_number, :building_name, :tel, :user_id, :item_id, :order_history_id, :token
 
   with_options presence: true do
+    validates :token
     validates :postal_code, format: { with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)" }
     validates :municipality, format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/, message: "is invalid. Input full-width characters." }
     validates :block_number
