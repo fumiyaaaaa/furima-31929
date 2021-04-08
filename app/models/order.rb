@@ -8,6 +8,8 @@ class Order
     validates :municipality, format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/, message: "is invalid. Input full-width characters." }
     validates :block_number
     validates :tel, format: { with: /\A\d{10,11}\z/ }
+    validates :user_id
+    validates :item_id
   end
   validates :address_id, numericality: { other_than: 1, message: "can't be blank" }
 
